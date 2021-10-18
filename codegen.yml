@@ -1,0 +1,13 @@
+watch:  true
+overwrite: true
+schema: "schema/**/*.graphql"
+generates:
+  src/generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-resolvers"
+    config:
+      useIndexSignature: true
+      contextType: src/api/context#IContext
+      mappers:
+        User: '@db/user#IUser'

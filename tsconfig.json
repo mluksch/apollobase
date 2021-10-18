@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "types": ["express"],
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "module": "CommonJS",
+    "target": "ES6",
+    "allowJs": false,
+    "skipDefaultLibCheck": true,
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "rootDir": "src",
+    "esModuleInterop": true,
+    "paths": {
+      "@config/*": ["./src/config/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@db/*": ["./src/db/*"],
+      "@api/*": ["./src/api/*"],
+      "@generated/*": ["./src/generated/*"]
+    },
+    "outDir": "dist"
+  },
+  "include": ["src"],
+}

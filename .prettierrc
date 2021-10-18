@@ -1,0 +1,6 @@
+{
+  "parser": "typescript",
+  "arrowParens": "always",
+  "trailingComma": "all",
+  "singleQuote": true
+}
