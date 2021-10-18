@@ -1,0 +1,13 @@
+input CatInput {
+    name: String!
+}
+
+input BestFriendInput {
+    catName: String!
+    bestFriendName: String!
+}
+
+extend type Mutation {
+    registerCat(input: CatInput): Cat
+    addBestFriend(input: BestFriendInput): Cat
+}

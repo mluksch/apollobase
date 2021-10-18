@@ -11,3 +11,4 @@ generates:
       contextType: src/api/context#IContext
       mappers:
         User: '@db/user#IUser'
+        Cat: '@db/cat#ICat'
