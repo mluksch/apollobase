@@ -1,5 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { IUser } from '@db/user';
+import { ICat } from '@db/cat';
 import { IContext } from 'src/api/context';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -15,10 +16,32 @@ export type Scalars = {
   Float: number;
 };
 
+export type BestFriendInput = {
+  bestFriendName: Scalars['String'];
+  catName: Scalars['String'];
+};
+
+export type Cat = {
+  __typename?: 'Cat';
+  bestFriend?: Maybe<Cat>;
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
+export type CatInput = {
+  name: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  addBestFriend?: Maybe<Cat>;
   loginUser?: Maybe<User>;
-  sayciao: Scalars['String'];
+  registerCat?: Maybe<Cat>;
+};
+
+
+export type MutationAddBestFriendArgs = {
+  input?: Maybe<BestFriendInput>;
 };
 
 
@@ -27,10 +50,21 @@ export type MutationLoginUserArgs = {
   password: Scalars['String'];
 };
 
+
+export type MutationRegisterCatArgs = {
+  input?: Maybe<CatInput>;
+};
+
 export type Query = {
   __typename?: 'Query';
+  myCat?: Maybe<Cat>;
   user?: Maybe<User>;
   userbyName?: Maybe<User>;
+};
+
+
+export type QueryMyCatArgs = {
+  name?: Maybe<Scalars['String']>;
 };
 
 
@@ -121,7 +155,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
+  BestFriendInput: BestFriendInput;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Cat: ResolverTypeWrapper<ICat>;
+  CatInput: CatInput;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
@@ -131,7 +168,10 @@ export type ResolversTypes = ResolversObject<{
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
+  BestFriendInput: BestFriendInput;
   Boolean: Scalars['Boolean'];
+  Cat: ICat;
+  CatInput: CatInput;
   ID: Scalars['ID'];
   Mutation: {};
   Query: {};
@@ -139,12 +179,21 @@ export type ResolversParentTypes = ResolversObject<{
   User: IUser;
 }>;
 
+export type CatResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Cat'] = ResolversParentTypes['Cat']> = ResolversObject<{
+  bestFriend?: Resolver<Maybe<ResolversTypes['Cat']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type MutationResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  addBestFriend?: Resolver<Maybe<ResolversTypes['Cat']>, ParentType, ContextType, RequireFields<MutationAddBestFriendArgs, never>>;
   loginUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationLoginUserArgs, 'email' | 'password'>>;
-  sayciao?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  registerCat?: Resolver<Maybe<ResolversTypes['Cat']>, ParentType, ContextType, RequireFields<MutationRegisterCatArgs, never>>;
 }>;
 
 export type QueryResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  myCat?: Resolver<Maybe<ResolversTypes['Cat']>, ParentType, ContextType, RequireFields<QueryMyCatArgs, never>>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'email'>>;
   userbyName?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserbyNameArgs, 'name'>>;
 }>;
@@ -158,6 +207,7 @@ export type UserResolvers<ContextType = IContext, ParentType extends ResolversPa
 }>;
 
 export type Resolvers<ContextType = IContext> = ResolversObject<{
+  Cat?: CatResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
