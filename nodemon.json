@@ -1,5 +1,5 @@
 {
-  "ext": "ts js graphql",
+  "ext": "ts js",
   "ignore": ["dist"],
   "watch": ["src"],
   "exec": "tsc && node --require ts-path-mapping/register dist/index.js"
