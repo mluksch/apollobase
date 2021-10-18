@@ -2,4 +2,12 @@ type Cat {
     id: ID!
     name: String!
     bestFriend: Cat
+    gender: Gender
 }
+
+enum Gender {
+   male
+   female
+}
+
+

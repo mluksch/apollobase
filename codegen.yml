@@ -9,6 +9,8 @@ generates:
     config:
       useIndexSignature: true
       contextType: src/api/context#IContext
+      enumValues:
+        Gender: '@db/cat#Gender'
       mappers:
         User: '@db/user#IUser'
         Cat: '@db/cat#ICat'

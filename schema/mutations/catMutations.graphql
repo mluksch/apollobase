@@ -1,5 +1,6 @@
-input CatInput {
+input RegisterCatInput {
     name: String!
+    gender: Gender!
 }
 
 input BestFriendInput {
@@ -8,6 +9,6 @@ input BestFriendInput {
 }
 
 extend type Mutation {
-    registerCat(input: CatInput): Cat
+    registerCat(input: RegisterCatInput!): Cat!
     addBestFriend(input: BestFriendInput): Cat
 }

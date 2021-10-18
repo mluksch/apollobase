@@ -1,3 +1,4 @@
+import { Gender } from '@db/cat';
 import { GraphQLResolveInfo } from 'graphql';
 import { IUser } from '@db/user';
 import { ICat } from '@db/cat';
@@ -6,6 +7,7 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type EnumResolverSignature<T, AllowedValues = any> = { [key in keyof T]?: AllowedValues };
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -24,19 +26,18 @@ export type BestFriendInput = {
 export type Cat = {
   __typename?: 'Cat';
   bestFriend?: Maybe<Cat>;
+  gender?: Maybe<Gender>;
   id: Scalars['ID'];
   name: Scalars['String'];
 };
 
-export type CatInput = {
-  name: Scalars['String'];
-};
+export { Gender };
 
 export type Mutation = {
   __typename?: 'Mutation';
   addBestFriend?: Maybe<Cat>;
   loginUser?: Maybe<User>;
-  registerCat?: Maybe<Cat>;
+  registerCat: Cat;
 };
 
 
@@ -52,7 +53,7 @@ export type MutationLoginUserArgs = {
 
 
 export type MutationRegisterCatArgs = {
-  input?: Maybe<CatInput>;
+  input: RegisterCatInput;
 };
 
 export type Query = {
@@ -74,6 +75,11 @@ export type QueryUserArgs = {
 
 
 export type QueryUserbyNameArgs = {
+  name: Scalars['String'];
+};
+
+export type RegisterCatInput = {
+  gender: Gender;
   name: Scalars['String'];
 };
 
@@ -158,10 +164,11 @@ export type ResolversTypes = ResolversObject<{
   BestFriendInput: BestFriendInput;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Cat: ResolverTypeWrapper<ICat>;
-  CatInput: CatInput;
+  Gender: Gender;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  RegisterCatInput: RegisterCatInput;
   String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<IUser>;
 }>;
@@ -171,25 +178,28 @@ export type ResolversParentTypes = ResolversObject<{
   BestFriendInput: BestFriendInput;
   Boolean: Scalars['Boolean'];
   Cat: ICat;
-  CatInput: CatInput;
   ID: Scalars['ID'];
   Mutation: {};
   Query: {};
+  RegisterCatInput: RegisterCatInput;
   String: Scalars['String'];
   User: IUser;
 }>;
 
 export type CatResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Cat'] = ResolversParentTypes['Cat']> = ResolversObject<{
   bestFriend?: Resolver<Maybe<ResolversTypes['Cat']>, ParentType, ContextType>;
+  gender?: Resolver<Maybe<ResolversTypes['Gender']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type GenderResolvers = EnumResolverSignature<{ female?: any, male?: any }, ResolversTypes['Gender']>;
+
 export type MutationResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   addBestFriend?: Resolver<Maybe<ResolversTypes['Cat']>, ParentType, ContextType, RequireFields<MutationAddBestFriendArgs, never>>;
   loginUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationLoginUserArgs, 'email' | 'password'>>;
-  registerCat?: Resolver<Maybe<ResolversTypes['Cat']>, ParentType, ContextType, RequireFields<MutationRegisterCatArgs, never>>;
+  registerCat?: Resolver<ResolversTypes['Cat'], ParentType, ContextType, RequireFields<MutationRegisterCatArgs, 'input'>>;
 }>;
 
 export type QueryResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
@@ -208,6 +218,7 @@ export type UserResolvers<ContextType = IContext, ParentType extends ResolversPa
 
 export type Resolvers<ContextType = IContext> = ResolversObject<{
   Cat?: CatResolvers<ContextType>;
+  Gender?: GenderResolvers;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

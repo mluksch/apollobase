@@ -13,6 +13,7 @@ export const mutationResolvers: MutationResolvers = {
     }
     const { insertedId } = await context.db.Cats.insertOne({
       name: args.input.name,
+      gender: args.input.gender,
     });
     return context.db.Cats.findOne({ _id: insertedId });
   },
