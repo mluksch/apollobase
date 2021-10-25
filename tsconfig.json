@@ -16,7 +16,8 @@
       "@config/*": ["./src/config/*"],
       "@utils/*": ["./src/utils/*"],
       "@db/*": ["./src/db/*"],
-      "@api/*": ["./src/api/*"],
+      "@context/*": ["./src/context/*"],
+      "@schema/*": ["./src/schema/*"],
       "@generated/*": ["./src/generated/*"]
     },
     "outDir": "dist"

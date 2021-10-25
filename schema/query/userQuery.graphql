@@ -1,4 +1,0 @@
-extend type Query {
-  user(email: String!): User
-  userbyName(name: String!): User
-}

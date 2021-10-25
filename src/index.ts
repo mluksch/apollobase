@@ -1,22 +1,26 @@
 import { ApolloServer } from 'apollo-server';
-import { createContext } from '@api/context';
-import { loadTypeDefs } from '@api/typeDefUtils';
-import { rootResolver } from '@api/resolvers';
+import { createContextFn } from './context';
+import { schema } from './schema/index';
+
 const {
   ApolloServerPluginLandingPageGraphQLPlayground,
 } = require('apollo-server-core');
 
 (async () => {
-  const server = new ApolloServer({
-    typeDefs: loadTypeDefs(),
-    resolvers: rootResolver,
-    context: createContext,
-    plugins: [
-      ApolloServerPluginLandingPageGraphQLPlayground({
-        // options
-      }),
-    ],
-  });
-  const { url } = await server.listen();
-  console.log(`Server started at "${url}"...`);
+  try {
+    const contextFn = await createContextFn();
+    const server = new ApolloServer({
+      schema,
+      context: contextFn,
+      plugins: [
+        ApolloServerPluginLandingPageGraphQLPlayground({
+          // options
+        }),
+      ],
+    });
+    const { url } = await server.listen();
+    console.log(`Server started at "${url}"...`);
+  } catch (e) {
+    console.error(e);
+  }
 })();

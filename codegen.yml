@@ -1,6 +1,8 @@
 watch:  true
 overwrite: true
-schema: "schema/**/*.graphql"
+schema: "http://localhost:4000/graphql"
+#schema: "src/api/**/*.ts"
+#documents: "src/api/**/*.ts"
 generates:
   src/generated/graphql.ts:
     plugins:
@@ -11,3 +13,4 @@ generates:
       contextType: src/api/context#IContext
       mappers:
         User: '@db/user#IUser'
+        Car: '@db/car#ICar'

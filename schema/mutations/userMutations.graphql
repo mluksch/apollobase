@@ -1,5 +1,0 @@
-extend type Mutation {
-    loginUser(email: String!, password: String!): User
-    sayciao: String!
-}
-
