@@ -44,6 +44,7 @@ const resolvers: Resolvers = {
         parent.car && context.db.Cars.findOne({ _id: new ObjectId(parent.car) })
       );
     },
+    createdAt: (parent, args, context, info) => parent.createdAt,
   },
   Query: {
     user: async (parent, { email }, context, info) => {
