@@ -3,7 +3,7 @@ import { Resolvers } from '@generated/graphql';
 
 export const typeDefs = gql`
   type Car {
-    id: ID!
+    _id: ObjectID!
     brand: String!
     description: String
   }
@@ -11,9 +11,7 @@ export const typeDefs = gql`
 
 export const resolvers: Resolvers = {
   Car: {
-    id: async (parent: any, args: any, context: any, info: any) => {
-      return parent?._id.toHexString() ?? null;
-    },
+    // use default resolver
   },
 };
 

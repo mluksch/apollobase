@@ -4,7 +4,7 @@ import { ObjectId } from 'mongodb';
 
 export const typeDefs = gql`
   type User {
-    id: ID!
+    _id: ObjectID!
     email: String!
     firstName: String!
     lastName: String!
@@ -27,24 +27,12 @@ export const typeDefs = gql`
 
 const resolvers: Resolvers = {
   User: {
-    id: async (parent, args, context, info) => {
-      return parent?._id.toHexString() ?? null;
-    },
-    email: async (parent, args, context, info) => {
-      return parent?.email ?? null;
-    },
-    lastName: async (parent, args, context, info) => {
-      return parent?.lastName ?? null;
-    },
-    firstName: async (parent, args, context, info) => {
-      return parent?.firstName ?? null;
-    },
+    // use default resolver
     car: async (parent, args, context, info) => {
       return (
         parent.car && context.db.Cars.findOne({ _id: new ObjectId(parent.car) })
       );
     },
-    createdAt: (parent, args, context, info) => parent.createdAt,
   },
   Query: {
     user: async (parent, { email }, context, info) => {
