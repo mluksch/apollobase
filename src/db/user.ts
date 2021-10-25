@@ -9,6 +9,7 @@ export type IUser = {
   firstName: string;
   lastName: string;
   car?: ObjectId;
+  createdAt: Date;
 };
 
 export const userCollection: ICollectionInfo<IUser> = {

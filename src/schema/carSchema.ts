@@ -1,11 +1,5 @@
 import { gql } from 'apollo-server';
-import {
-  MutationResolvers,
-  QueryResolvers,
-  Resolvers,
-  UserResolvers,
-} from '@generated/graphql';
-import { makeExecutableSchema } from '@graphql-tools/schema';
+import { Resolvers } from '@generated/graphql';
 
 export const typeDefs = gql`
   type Car {

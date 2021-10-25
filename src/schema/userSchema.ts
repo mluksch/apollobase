@@ -9,6 +9,7 @@ export const typeDefs = gql`
     firstName: String!
     lastName: String!
     car: Car
+    createdAt: DateTime!
   }
 
   type Query

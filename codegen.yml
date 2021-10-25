@@ -10,7 +10,12 @@ generates:
       - "typescript-resolvers"
     config:
       useIndexSignature: true
-      contextType: src/api/context#IContext
+      contextType: '@context/index#IContext'
       mappers:
         User: '@db/user#IUser'
         Car: '@db/car#ICar'
+#  introspection.json:
+#     plugins:
+#       - introspection
+#     config:
+#       minify: true

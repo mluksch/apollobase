@@ -1,9 +1,16 @@
 import { userSchema } from './userSchema';
 import { carSchema } from './carSchema';
 import { merge } from 'lodash';
-import { makeExecutableSchema } from '@graphql-tools/schema';
+import { typeDefs, resolvers } from 'graphql-scalars';
+import { gql } from 'apollo-server';
 
-export const schema = makeExecutableSchema({
-  typeDefs: [userSchema.typeDefs, carSchema.typeDefs],
-  resolvers: merge(userSchema.resolvers, carSchema.resolvers),
-});
+export const rootSchema = {
+  typeDefs: [
+    gql`
+      ${typeDefs.join('\n')}
+    `,
+    userSchema.typeDefs,
+    carSchema.typeDefs,
+  ],
+  resolvers: merge(resolvers, userSchema.resolvers, carSchema.resolvers),
+};

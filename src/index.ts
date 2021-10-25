@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server';
 import { createContextFn } from './context';
-import { schema } from './schema/index';
+import { rootSchema } from '@schema/index';
 
 const {
   ApolloServerPluginLandingPageGraphQLPlayground,
@@ -10,7 +10,8 @@ const {
   try {
     const contextFn = await createContextFn();
     const server = new ApolloServer({
-      schema,
+      typeDefs: rootSchema.typeDefs,
+      resolvers: rootSchema.resolvers,
       context: contextFn,
       plugins: [
         ApolloServerPluginLandingPageGraphQLPlayground({
