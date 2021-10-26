@@ -1,6 +1,7 @@
 import { gql } from 'apollo-server';
 import { Resolvers } from '@generated/graphql';
 import { ObjectId } from 'mongodb';
+import { ISchemaElement } from '@utils/graphql/createSchema';
 
 export const typeDefs = gql`
   type User {
@@ -50,7 +51,7 @@ const resolvers: Resolvers = {
   },
 };
 
-export const userSchema = {
+export const userSchema: ISchemaElement<Resolvers> = {
   typeDefs,
   resolvers,
 };

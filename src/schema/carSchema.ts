@@ -1,5 +1,6 @@
 import { gql } from 'apollo-server';
 import { Resolvers } from '@generated/graphql';
+import { ISchemaElement } from '@utils/graphql/createSchema';
 
 export const typeDefs = gql`
   type Car {
@@ -15,7 +16,7 @@ export const resolvers: Resolvers = {
   },
 };
 
-export const carSchema = {
+export const carSchema: ISchemaElement<Resolvers> = {
   typeDefs,
   resolvers,
 };
