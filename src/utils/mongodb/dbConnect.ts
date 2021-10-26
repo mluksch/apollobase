@@ -35,29 +35,22 @@ const getDb = <RES>(
   }) as IDb<RES>;
 };
 
-export const dbConnect = once(
-  async (args: {
-    dbUri: string;
-    dbName: string;
-    collectionInfos: {
-      [collectionName: string]: ICollectionInfo;
-    };
-  }): Promise<
-    IDb<{
-      Users: IUser;
-      Cars: ICar;
-    }>
-  > => {
-    const client = await MongoClient.connect(args.dbUri, {
-      keepAlive: true,
-      socketTimeoutMS: 2000,
-      connectTimeoutMS: 2000,
-    });
-    const dbRef = client.db(args.dbName);
-    await createIndices(dbRef, values(args.collectionInfos));
-    return getDb(dbRef, {
-      Users: userCollection,
-      Cars: carCollection,
-    });
-  },
-);
+export const dbConnect = async <RES>(args: {
+  dbUri: string;
+  dbName: string;
+  collectionInfos: {
+    [collectionName: string]: ICollectionInfo;
+  };
+}): Promise<IDb<RES>> => {
+  const client = await MongoClient.connect(args.dbUri, {
+    keepAlive: true,
+    socketTimeoutMS: 2000,
+    connectTimeoutMS: 2000,
+  });
+  const dbRef = client.db(args.dbName);
+  await createIndices(dbRef, values(args.collectionInfos));
+  return getDb(dbRef, {
+    Users: userCollection,
+    Cars: carCollection,
+  });
+};

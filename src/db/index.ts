@@ -1,15 +1,13 @@
 import { config } from '@config/index';
 import { IUser, userCollection } from '@db/user';
 import { carCollection, ICar } from '@db/car';
-import { dbConnect, IDb } from '@utils/mongodb/dbConnect';
+import { dbConnect } from '@utils/mongodb/dbConnect';
 
-export const connectDB = async (): Promise<
-  IDb<{
+export const connectDB = async () => {
+  return dbConnect<{
     Users: IUser;
     Cars: ICar;
-  }>
-> => {
-  return dbConnect({
+  }>({
     dbUri: config.DB_URI,
     dbName: 'graphql-intro',
     collectionInfos: {
