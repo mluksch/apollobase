@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import { ICollectionInfo } from '@utils/createIndices';
+import { ICollectionInfo } from '@utils/mongodb/dbConnect';
 
 const COLL_NAME = 'cars';
 
