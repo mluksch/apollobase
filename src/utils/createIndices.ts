@@ -15,5 +15,5 @@ export const createIndices = async (
     collectionInfos
       .filter((info) => isPresent(info.createIndex))
       .map((info) => info.createIndex(db)),
-  ).then((results) => unwrapSettledPromises<string>(results));
+  ).then(unwrapSettledPromises);
 };
