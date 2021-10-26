@@ -3,9 +3,6 @@ import { isPresent } from 'ts-is-present';
 import { unwrapSettledPromises } from '@utils/promise/unwrapSettledPromises';
 import mapValues from 'lodash/mapValues';
 import values from 'lodash/values';
-import once from 'lodash/once';
-import { IUser, userCollection } from '@db/user';
-import { carCollection, ICar } from '@db/car';
 
 export type ICollectionInfo<T = any> = {
   createIndex?: (db: Db) => Promise<string>;
@@ -49,8 +46,5 @@ export const dbConnect = async <RES>(args: {
   });
   const dbRef = client.db(args.dbName);
   await createIndices(dbRef, values(args.collectionInfos));
-  return getDb(dbRef, {
-    Users: userCollection,
-    Cars: carCollection,
-  });
+  return getDb(dbRef, args.collectionInfos);
 };

@@ -2,8 +2,9 @@ import { config } from '@config/index';
 import { IUser, userCollection } from '@db/user';
 import { carCollection, ICar } from '@db/car';
 import { dbConnect } from '@utils/mongodb/dbConnect';
+import once from 'lodash/once';
 
-export const connectDB = async () => {
+export const connectDB = once(async () => {
   return dbConnect<{
     Users: IUser;
     Cars: ICar;
@@ -15,4 +16,4 @@ export const connectDB = async () => {
       Cars: carCollection,
     },
   });
-};
+});
