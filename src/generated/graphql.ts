@@ -121,7 +121,7 @@ export type Scalars = {
   /** Integers that will have a value of 0 or less. */
   NonPositiveInt: any;
   /** A field whose value conforms with the standard mongodb object ID as described here: https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectId. Example: 5e5677d71bdc2ae76344968c */
-  ObjectID: any;
+  ObjectID: string;
   /** A field whose value conforms to the standard E.164 format as specified in: https://en.wikipedia.org/wiki/E.164. Basically this is +17895551234. */
   PhoneNumber: any;
   /** A field whose value is a valid TCP port within the range of 0 to 65535: https://en.wikipedia.org/wiki/Transmission_Control_Protocol#TCP_ports */
@@ -160,9 +160,9 @@ export type Scalars = {
 
 export type Car = {
   __typename?: 'Car';
+  _id: Scalars['ObjectID'];
   brand: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
 };
 
 export type Mutation = {
@@ -179,6 +179,7 @@ export type MutationLoginUserArgs = {
 export type Query = {
   __typename?: 'Query';
   user?: Maybe<User>;
+  userById?: Maybe<User>;
   userbyName?: Maybe<User>;
 };
 
@@ -188,17 +189,22 @@ export type QueryUserArgs = {
 };
 
 
+export type QueryUserByIdArgs = {
+  _id: Scalars['ObjectID'];
+};
+
+
 export type QueryUserbyNameArgs = {
   name: Scalars['String'];
 };
 
 export type User = {
   __typename?: 'User';
+  _id: Scalars['ObjectID'];
   car?: Maybe<Car>;
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   firstName: Scalars['String'];
-  id: Scalars['ObjectID'];
   lastName: Scalars['String'];
 };
 
@@ -287,7 +293,6 @@ export type ResolversTypes = ResolversObject<{
   HexColorCode: ResolverTypeWrapper<Scalars['HexColorCode']>;
   Hexadecimal: ResolverTypeWrapper<Scalars['Hexadecimal']>;
   IBAN: ResolverTypeWrapper<Scalars['IBAN']>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
   IPv4: ResolverTypeWrapper<Scalars['IPv4']>;
   IPv6: ResolverTypeWrapper<Scalars['IPv6']>;
   ISBN: ResolverTypeWrapper<Scalars['ISBN']>;
@@ -310,7 +315,7 @@ export type ResolversTypes = ResolversObject<{
   NonNegativeInt: ResolverTypeWrapper<Scalars['NonNegativeInt']>;
   NonPositiveFloat: ResolverTypeWrapper<Scalars['NonPositiveFloat']>;
   NonPositiveInt: ResolverTypeWrapper<Scalars['NonPositiveInt']>;
-  ObjectID: ResolverTypeWrapper<Scalars['ObjectID']>;
+  ObjectID: ResolverTypeWrapper<string>;
   PhoneNumber: ResolverTypeWrapper<Scalars['PhoneNumber']>;
   Port: ResolverTypeWrapper<Scalars['Port']>;
   PositiveFloat: ResolverTypeWrapper<Scalars['PositiveFloat']>;
@@ -350,7 +355,6 @@ export type ResolversParentTypes = ResolversObject<{
   HexColorCode: Scalars['HexColorCode'];
   Hexadecimal: Scalars['Hexadecimal'];
   IBAN: Scalars['IBAN'];
-  ID: Scalars['ID'];
   IPv4: Scalars['IPv4'];
   IPv6: Scalars['IPv6'];
   ISBN: Scalars['ISBN'];
@@ -373,7 +377,7 @@ export type ResolversParentTypes = ResolversObject<{
   NonNegativeInt: Scalars['NonNegativeInt'];
   NonPositiveFloat: Scalars['NonPositiveFloat'];
   NonPositiveInt: Scalars['NonPositiveInt'];
-  ObjectID: Scalars['ObjectID'];
+  ObjectID: string;
   PhoneNumber: Scalars['PhoneNumber'];
   Port: Scalars['Port'];
   PositiveFloat: Scalars['PositiveFloat'];
@@ -405,9 +409,9 @@ export interface ByteScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type CarResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Car'] = ResolversParentTypes['Car']> = ResolversObject<{
+  _id?: Resolver<ResolversTypes['ObjectID'], ParentType, ContextType>;
   brand?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -569,6 +573,7 @@ export interface PostalCodeScalarConfig extends GraphQLScalarTypeConfig<Resolver
 
 export type QueryResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'email'>>;
+  userById?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserByIdArgs, '_id'>>;
   userbyName?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserbyNameArgs, 'name'>>;
 }>;
 
@@ -613,11 +618,11 @@ export interface UnsignedIntScalarConfig extends GraphQLScalarTypeConfig<Resolve
 }
 
 export type UserResolvers<ContextType = IContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
+  _id?: Resolver<ResolversTypes['ObjectID'], ParentType, ContextType>;
   car?: Resolver<Maybe<ResolversTypes['Car']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ObjectID'], ParentType, ContextType>;
   lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;

@@ -1,4 +1,4 @@
-export const mapSettledPromises = <R>(
+export const unwrapSettledPromises = <R>(
   results: PromiseSettledResult<R>[],
 ): R[] => {
   const errors = results.filter(

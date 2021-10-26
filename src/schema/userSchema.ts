@@ -12,10 +12,8 @@ export const typeDefs = gql`
     createdAt: DateTime!
   }
 
-  type Query
-  type Mutation
-
   extend type Query {
+    userById(_id: ObjectID!): User
     user(email: String!): User
     userbyName(name: String!): User
   }
@@ -37,6 +35,9 @@ const resolvers: Resolvers = {
   Query: {
     user: async (parent, { email }, context, info) => {
       return context.db.Users.findOne({ email });
+    },
+    userById: async (parent, args, context, info) => {
+      return context.db.Users.findOne({ _id: new ObjectId(args._id) });
     },
     userbyName: async (parent, args, context, info) => {
       return null;

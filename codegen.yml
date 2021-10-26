@@ -8,12 +8,18 @@ generates:
     plugins:
       - "typescript"
       - "typescript-resolvers"
+      - "typescript-operations"
     config:
       useIndexSignature: true
       contextType: '@context/index#IContext'
       mappers:
         User: '@db/user#IUser'
         Car: '@db/car#ICar'
+        ObjectID: 'string'
+      #strictScalars: true
+      scalars:
+        ObjectID: "string"
+
 #  introspection.json:
 #     plugins:
 #       - introspection

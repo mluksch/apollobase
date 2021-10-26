@@ -4,11 +4,19 @@ import { merge } from 'lodash';
 import { typeDefs, resolvers } from 'graphql-scalars';
 import { gql } from 'apollo-server';
 
+const BASE_TYPE_DEFS = gql`
+  type Query
+  type Mutation
+`;
+
+const GRAPHQL_SCALARS_TYPE_DEFS = gql`
+  ${typeDefs.join('\n')}
+`;
+
 export const rootSchema = {
   typeDefs: [
-    gql`
-      ${typeDefs.join('\n')}
-    `,
+    BASE_TYPE_DEFS,
+    GRAPHQL_SCALARS_TYPE_DEFS,
     userSchema.typeDefs,
     carSchema.typeDefs,
   ],

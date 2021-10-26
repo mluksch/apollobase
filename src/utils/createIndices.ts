@@ -1,6 +1,6 @@
 import { Collection, Db } from 'mongodb';
 import { isPresent } from 'ts-is-present';
-import { mapSettledPromises } from '@utils/mapSettledPromises';
+import { unwrapSettledPromises } from '@utils/unwrapSettledPromises';
 
 export type ICollectionInfo<T = any> = {
   createIndex?: (db: Db) => Promise<string>;
@@ -15,5 +15,5 @@ export const createIndices = async (
     collectionInfos
       .filter((info) => isPresent(info.createIndex))
       .map((info) => info.createIndex(db)),
-  ).then((results) => mapSettledPromises<string>(results));
+  ).then((results) => unwrapSettledPromises<string>(results));
 };
