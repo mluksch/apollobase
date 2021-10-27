@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server';
 import { getEnv } from '@utils/envs/getEnv';
-import { connectDB, IModels } from './services/models';
+import { connectToDb, IModels } from './services/models';
 import { createContextProducer } from '@utils/graphql/createContextProducer';
 import { generateSchema } from '@utils/graphql/createSchema';
 import { Resolvers } from '@generated/graphql';
@@ -16,7 +16,7 @@ const {
 (async () => {
   try {
     // create db:
-    const db = await connectDB();
+    const db = await connectToDb();
 
     // create context producer:
     const context = await createContextProducer<IModels, IContextData>({

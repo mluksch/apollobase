@@ -1,4 +1,4 @@
-import { IDb } from '@utils/mongodb/dbConnect';
+import { IDb } from '@utils/mongodb/createConnection';
 import { ContextFunction } from 'apollo-server-core/src/types';
 import { Request, Response } from 'express';
 
@@ -14,7 +14,7 @@ export type IExpressData = {
 };
 
 // createContextProducer:
-// args = { db: await dbConnect({ ... }) }
+// args = { db: await createConnection({ ... }) }
 export const createContextProducer = async <DB_MODELS, CTX_DATA = {}>(args: {
   db: IDb<DB_MODELS>;
   contextDataProducer?: (expressData: IExpressData) => Promise<CTX_DATA>;

@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { connectDB } from '@models/index';
+import { connectToDb } from '@models/index';
 import { IUser } from '@models/user';
 import { v4 } from 'uuid';
 
@@ -10,7 +10,7 @@ export const createUser = async (input: {
   password: string;
 }): Promise<IUser> => {
   const hashed = await bcrypt.hash(input.password, 10);
-  const { Users } = await connectDB();
+  const { Users } = await connectToDb();
   const result = await Users.insertOne({
     email: input.email,
     firstName: input.firstName,

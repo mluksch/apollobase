@@ -1,7 +1,7 @@
 import { config } from '@config/index';
 import { IUser, userCollection } from './user';
 import { carCollection, ICar } from './car';
-import { dbConnect } from '@utils/mongodb/dbConnect';
+import { createConnection } from '@utils/mongodb/createConnection';
 import once from 'lodash/once';
 
 export type IModels = {
@@ -9,8 +9,8 @@ export type IModels = {
   Cars: ICar;
 };
 
-export const connectDB = once(async () => {
-  return dbConnect<IModels>({
+export const connectToDb = once(async () => {
+  return createConnection<IModels>({
     dbUri: config.DB_URI,
     dbName: config.DB_NAME,
     collectionInfos: {

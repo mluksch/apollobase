@@ -166,8 +166,8 @@ export type Car = {
 };
 
 export type CreateUserInput = {
-  email: Scalars['String'];
   firstName: Scalars['String'];
+  jwt: Scalars['String'];
   lastName: Scalars['String'];
   password: Scalars['String'];
 };
@@ -186,6 +186,7 @@ export type Mutation = {
   createUser?: Maybe<User>;
   loginUser?: Maybe<User>;
   logoutUser?: Maybe<User>;
+  signupUser?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -201,6 +202,11 @@ export type MutationLoginUserArgs = {
 
 export type MutationLogoutUserArgs = {
   input: LogoutInput;
+};
+
+
+export type MutationSignupUserArgs = {
+  input: SignupUserInput;
 };
 
 export type Query = {
@@ -223,6 +229,10 @@ export type QueryUserByIdArgs = {
 
 export type QueryUserbyNameArgs = {
   name: Scalars['String'];
+};
+
+export type SignupUserInput = {
+  email: Scalars['String'];
 };
 
 export type User = {
@@ -355,6 +365,7 @@ export type ResolversTypes = ResolversObject<{
   RGB: ResolverTypeWrapper<Scalars['RGB']>;
   RGBA: ResolverTypeWrapper<Scalars['RGBA']>;
   SafeInt: ResolverTypeWrapper<Scalars['SafeInt']>;
+  SignupUserInput: SignupUserInput;
   String: ResolverTypeWrapper<Scalars['String']>;
   Time: ResolverTypeWrapper<Scalars['Time']>;
   Timestamp: ResolverTypeWrapper<Scalars['Timestamp']>;
@@ -420,6 +431,7 @@ export type ResolversParentTypes = ResolversObject<{
   RGB: Scalars['RGB'];
   RGBA: Scalars['RGBA'];
   SafeInt: Scalars['SafeInt'];
+  SignupUserInput: SignupUserInput;
   String: Scalars['String'];
   Time: Scalars['Time'];
   Timestamp: Scalars['Timestamp'];
@@ -552,6 +564,7 @@ export type MutationResolvers<ContextType = IContext, ParentType extends Resolve
   createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
   loginUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationLoginUserArgs, 'input'>>;
   logoutUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationLogoutUserArgs, 'input'>>;
+  signupUser?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationSignupUserArgs, 'input'>>;
 }>;
 
 export interface NegativeFloatScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['NegativeFloat'], any> {

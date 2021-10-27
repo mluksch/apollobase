@@ -33,7 +33,7 @@ const getDb = <DB_MODEL>(
 };
 
 // MODEL: { <CollectionName>: <Collection-Type> } i.e: { Users: IUser, Cars: ICar }
-export const dbConnect = async <DB_MODEL>(args: {
+export const createConnection = async <DB_MODEL>(args: {
   dbUri: string;
   dbName: string;
   collectionInfos: {
