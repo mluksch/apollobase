@@ -17,6 +17,8 @@ const GRAPHQL_SCALARS_TYPE_DEFS = gql`
   ${typeDefs.join('\n')}
 `;
 
+// generateSchema:
+// elements = [ISchemaElement<Resolvers>, { typeDefs: gql`extends Query {}; extends Mutation {}; type ...`, resolvers: { Query: ..., Mutation: ..., ... } }, ...]
 export const generateSchema = <RESOLVERS>(
   elements: ISchemaElement<RESOLVERS>[],
 ): {

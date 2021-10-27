@@ -9,8 +9,8 @@ export type ICollectionInfo<T = any> = {
   getCollection: (db: Db) => Collection<T>;
 };
 
-export type IDb<RES> = {
-  [key in keyof RES]: Collection<RES[key]>;
+export type IDb<DB_MODEL> = {
+  [key in keyof DB_MODEL]: Collection<DB_MODEL[key]>;
 };
 
 const createIndices = async (db: Db, collectionInfos: ICollectionInfo[]) => {
@@ -21,24 +21,25 @@ const createIndices = async (db: Db, collectionInfos: ICollectionInfo[]) => {
   ).then(unwrapSettledPromises);
 };
 
-const getDb = <RES>(
+const getDb = <DB_MODEL>(
   db: Db,
   collectionInfos: {
     [collectionName: string]: ICollectionInfo;
   },
-): IDb<RES> => {
+): IDb<DB_MODEL> => {
   return mapValues(collectionInfos, (info) => {
     return info.getCollection(db);
-  }) as IDb<RES>;
+  }) as IDb<DB_MODEL>;
 };
 
-export const dbConnect = async <RES>(args: {
+// MODEL: { <CollectionName>: <Collection-Type> } i.e: { Users: IUser, Cars: ICar }
+export const dbConnect = async <DB_MODEL>(args: {
   dbUri: string;
   dbName: string;
   collectionInfos: {
     [collectionName: string]: ICollectionInfo;
   };
-}): Promise<IDb<RES>> => {
+}): Promise<IDb<DB_MODEL>> => {
   const client = await MongoClient.connect(args.dbUri, {
     keepAlive: true,
     socketTimeoutMS: 2000,

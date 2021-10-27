@@ -4,11 +4,13 @@ import { carCollection, ICar } from '@db/car';
 import { dbConnect } from '@utils/mongodb/dbConnect';
 import once from 'lodash/once';
 
+export type IModels = {
+  Users: IUser;
+  Cars: ICar;
+};
+
 export const connectDB = once(async () => {
-  return dbConnect<{
-    Users: IUser;
-    Cars: ICar;
-  }>({
+  return dbConnect<IModels>({
     dbUri: config.DB_URI,
     dbName: 'graphql-intro',
     collectionInfos: {
