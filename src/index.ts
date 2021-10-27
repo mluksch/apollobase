@@ -19,9 +19,9 @@ const {
     // create context producer:
     const contextProducer = await createContextProducer<IModels>({
       db,
-      contextDataProducer: async (expressData) => {
-        return {};
-      },
+      //contextDataProducer: async (expressData) => {
+      //  return {};
+      //},
     });
 
     // create root-schema:
