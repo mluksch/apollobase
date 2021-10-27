@@ -10,6 +10,10 @@ export type IUser = {
   lastName: string;
   car?: ObjectId;
   createdAt: Date;
+  authorization: {
+    password: string;
+    token?: string | null;
+  };
 };
 
 export const userCollection: ICollectionInfo<IUser> = {

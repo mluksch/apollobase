@@ -2,8 +2,9 @@ import { gql } from 'apollo-server';
 import { Resolvers } from '@generated/graphql';
 import { ObjectId } from 'mongodb';
 import { ISchemaElement } from '@utils/graphql/createSchema';
+import { loginUser } from '../services/userService/loginUser';
 
-export const typeDefs = gql`
+const types = gql`
   type User {
     _id: ObjectID!
     email: String!
@@ -12,16 +13,34 @@ export const typeDefs = gql`
     car: Car
     createdAt: DateTime!
   }
+`;
 
+const queries = gql`
   extend type Query {
     userById(_id: ObjectID!): User
     user(email: String!): User
     userbyName(name: String!): User
   }
+`;
 
+const mutations = gql`
   extend type Mutation {
-    loginUser(email: String!, password: String!): User
+    loginUser(input: LoginInput!): User
   }
+`;
+
+const inputs = gql`
+  input LoginInput {
+    email: String!
+    password: String!
+  }
+`;
+
+export const typeDefs = gql`
+  ${queries}
+  ${inputs}
+  ${mutations}
+  ${types}
 `;
 
 const resolvers: Resolvers = {
@@ -45,8 +64,13 @@ const resolvers: Resolvers = {
     },
   },
   Mutation: {
-    loginUser: (parent, args, context, info) => {
-      return null;
+    loginUser: async (parent, args, context, info) => {
+      const user = await loginUser(args.input);
+      context.expressData.res.setHeader(
+        'Authorization',
+        user.authorization.token,
+      );
+      return user;
     },
   },
 };

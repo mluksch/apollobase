@@ -7,6 +7,7 @@ import { Resolvers } from '@generated/graphql';
 import { userSchema } from '@schema/userSchema';
 import { carSchema } from '@schema/carSchema';
 import { config } from '@config/index';
+import { IContextData } from '@context/index';
 
 const {
   ApolloServerPluginLandingPageGraphQLPlayground,
@@ -18,11 +19,14 @@ const {
     const db = await connectDB();
 
     // create context producer:
-    const context = await createContextProducer<IModels>({
+    const context = await createContextProducer<IModels, IContextData>({
       db,
-      //contextDataProducer: async (expressData) => {
-      //  return {};
-      //},
+      contextDataProducer: async (expressData) => {
+        const authToken = expressData.req.header('Authorization');
+        return {
+          user: await db.Users.findOne({ authorizationToken: authToken }),
+        };
+      },
     });
 
     // create root-schema:

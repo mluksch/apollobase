@@ -15,8 +15,8 @@
     "paths": {
       "@config/*": ["./src/config/*"],
       "@utils/*": ["./src/utils/*"],
-      "@models/*": ["./src/service/models/*"],
-      "@services/*": ["./src/service/*"],
+      "@models/*": ["./src/services/models/*"],
+      "@services/*": ["./src/services/*"],
       "@context/*": ["./src/context/*"],
       "@schema/*": ["./src/schema/*"],
       "@generated/*": ["./src/generated/*"]

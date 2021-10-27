@@ -3,8 +3,8 @@ import {
   GraphQLScalarType,
   GraphQLScalarTypeConfig,
 } from 'graphql';
-import { IUser } from '../services/models/user';
-import { ICar } from '../services/models/car';
+import { IUser } from '@models/user';
+import { ICar } from '@models/car';
 import { IContext } from '@context/index';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -177,14 +177,18 @@ export type Car = {
   description?: Maybe<Scalars['String']>;
 };
 
+export type LoginInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   loginUser?: Maybe<User>;
 };
 
 export type MutationLoginUserArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  input: LoginInput;
 };
 
 export type Query = {
@@ -352,6 +356,7 @@ export type ResolversTypes = ResolversObject<{
   LocalDate: ResolverTypeWrapper<Scalars['LocalDate']>;
   LocalEndTime: ResolverTypeWrapper<Scalars['LocalEndTime']>;
   LocalTime: ResolverTypeWrapper<Scalars['LocalTime']>;
+  LoginInput: LoginInput;
   Long: ResolverTypeWrapper<Scalars['Long']>;
   Longitude: ResolverTypeWrapper<Scalars['Longitude']>;
   MAC: ResolverTypeWrapper<Scalars['MAC']>;
@@ -414,6 +419,7 @@ export type ResolversParentTypes = ResolversObject<{
   LocalDate: Scalars['LocalDate'];
   LocalEndTime: Scalars['LocalEndTime'];
   LocalTime: Scalars['LocalTime'];
+  LoginInput: LoginInput;
   Long: Scalars['Long'];
   Longitude: Scalars['Longitude'];
   MAC: Scalars['MAC'];
@@ -605,7 +611,7 @@ export type MutationResolvers<
     Maybe<ResolversTypes['User']>,
     ParentType,
     ContextType,
-    RequireFields<MutationLoginUserArgs, 'email' | 'password'>
+    RequireFields<MutationLoginUserArgs, 'input'>
   >;
 }>;
 
