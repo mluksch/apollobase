@@ -1,11 +1,12 @@
 import { ApolloServer } from 'apollo-server';
 import { getEnv } from '@utils/envs/getEnv';
-import { connectDB, IModels } from '@db/index';
+import { connectDB, IModels } from './services/models';
 import { createContextProducer } from '@utils/graphql/createContextProducer';
 import { generateSchema } from '@utils/graphql/createSchema';
 import { Resolvers } from '@generated/graphql';
 import { userSchema } from '@schema/userSchema';
 import { carSchema } from '@schema/carSchema';
+import { config } from '@config/index';
 
 const {
   ApolloServerPluginLandingPageGraphQLPlayground,
@@ -17,7 +18,7 @@ const {
     const db = await connectDB();
 
     // create context producer:
-    const contextProducer = await createContextProducer<IModels>({
+    const context = await createContextProducer<IModels>({
       db,
       //contextDataProducer: async (expressData) => {
       //  return {};
@@ -31,10 +32,10 @@ const {
     const server = new ApolloServer({
       typeDefs: rootSchema.typeDefs,
       resolvers: rootSchema.resolvers,
-      context: contextProducer,
+      context,
       // dont use introspection in production:
       // https://www.apollographql.com/blog/graphql/security/why-you-should-disable-graphql-introspection-in-production/
-      introspection: getEnv('NODE_ENV') !== 'production',
+      introspection: config.NODE_ENV !== 'production',
       plugins: [
         ApolloServerPluginLandingPageGraphQLPlayground({
           // options
