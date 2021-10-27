@@ -15,14 +15,13 @@ export const loginUser = async (input: LoginInput): Promise<IUser | null> => {
       user.authorization.password,
     );
     if (isValid) {
-      const newToken = v4();
       const updatedUser = await db.Users.findOneAndUpdate(
         {
           _id: user._id,
         },
         {
           $set: {
-            'authorization.token': newToken,
+            'authorization.token': v4(),
           },
         },
       );

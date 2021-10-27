@@ -3,6 +3,8 @@ import { Resolvers } from '@generated/graphql';
 import { ObjectId } from 'mongodb';
 import { ISchemaElement } from '@utils/graphql/createSchema';
 import { loginUser } from '../services/userService/loginUser';
+import { logoutUser } from '@services/userService/logoutUser';
+import { createUser } from '@services/userService/createUser';
 
 const types = gql`
   type User {
@@ -26,12 +28,25 @@ const queries = gql`
 const mutations = gql`
   extend type Mutation {
     loginUser(input: LoginInput!): User
+    logoutUser(input: LogoutInput!): User
+    createUser(input: CreateUserInput!): User
   }
 `;
 
 const inputs = gql`
   input LoginInput {
     email: String!
+    password: String!
+  }
+
+  input LogoutInput {
+    email: String!
+  }
+
+  input CreateUserInput {
+    email: String!
+    firstName: String!
+    lastName: String!
     password: String!
   }
 `;
@@ -66,6 +81,26 @@ const resolvers: Resolvers = {
   Mutation: {
     loginUser: async (parent, args, context, info) => {
       const user = await loginUser(args.input);
+      context.expressData.res.setHeader(
+        'Authorization',
+        user.authorization.token,
+      );
+      return user;
+    },
+    logoutUser: async (parent, args, context, info) => {
+      const user = await logoutUser({
+        email: args.input.email,
+      });
+      context.expressData.res.setHeader('Authorization', null);
+      return user;
+    },
+    createUser: async (parent, args, context, info) => {
+      const user = await createUser({
+        firstName: args.input.firstName,
+        lastName: args.input.lastName,
+        password: args.input.password,
+        email: args.input.email,
+      });
       context.expressData.res.setHeader(
         'Authorization',
         user.authorization.token,

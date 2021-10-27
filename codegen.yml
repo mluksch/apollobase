@@ -13,8 +13,8 @@ generates:
       useIndexSignature: true
       contextType: '@context/index#IContext'
       mappers:
-        User: '@db/user#IUser'
-        Car: '@db/car#ICar'
+        User: '@models/user#IUser'
+        Car: '@models/car#ICar'
         ObjectID: 'string'
       #strictScalars: true
       scalars:
