@@ -1,6 +1,6 @@
 import { LoginInput } from '@generated/graphql';
-import { IUser } from '../models/user';
-import { connectToDb } from '../models';
+import { IUser } from '@models/user';
+import { connectToDb } from '@models/index';
 import { v4 } from 'uuid';
 import bcrypt from 'bcrypt';
 

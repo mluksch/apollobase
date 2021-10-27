@@ -1,6 +1,5 @@
 import { ApolloServer } from 'apollo-server';
-import { getEnv } from '@utils/envs/getEnv';
-import { connectToDb, IModels } from './services/models';
+import { connectToDb, IModels } from '@models/index';
 import { createContextProducer } from '@utils/graphql/createContextProducer';
 import { generateSchema } from '@utils/graphql/createSchema';
 import { Resolvers } from '@generated/graphql';
