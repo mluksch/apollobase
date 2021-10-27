@@ -83,7 +83,7 @@ const resolvers: Resolvers = {
       const user = await loginUser(args.input);
       context.expressData.res.setHeader(
         'Authorization',
-        user.authorization.token,
+        user?.authorization?.token ?? null,
       );
       return user;
     },

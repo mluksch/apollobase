@@ -9,7 +9,7 @@ export const loginUser = async (input: LoginInput): Promise<IUser | null> => {
   const user = await db.Users.findOne({
     email: input.email,
   });
-  if (user) {
+  if (user?.authorization?.password) {
     const isValid = await bcrypt.compare(
       input.password,
       user.authorization.password,

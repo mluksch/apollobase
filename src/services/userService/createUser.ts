@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { connectDB } from '@models/index';
 import { IUser } from '@models/user';
+import { v4 } from 'uuid';
 
 export const createUser = async (input: {
   firstName: string;
@@ -17,7 +18,7 @@ export const createUser = async (input: {
     createdAt: new Date(),
     authorization: {
       password: hashed,
-      token: hashed,
+      token: v4(),
     },
   });
   return Users.findOne({
